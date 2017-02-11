@@ -49,8 +49,8 @@ const connect = () => {
 const seed = () => connect()
     .then(() => User.create({ name: 'poke gui' }))
     .then(author => Story.createStory('poke gui', { title: 'sexzia', content: 'boobah' }))
-    .then(author => Story.createStory('poke gui', { title: 'yazu', content: 'fompe', tags: '1,2,3,4,5' }))
-    .then(author => Story.createStory('faitzi', { title: 'danni is cool', content: 'super cool', tags: '1,2,3' }));
+    .then(author => Story.createStory('poke gui', { title: 'yazu', content: 'fompe', tags: 'abc, xyz' }))
+    .then(author => Story.createStory('faitzi', { title: 'danni is cool', content: 'super cool', tags: 'abc' }));
 const sync = () => connect().then(() => db.sync({ force: true }));
 
 module.exports = { db, seed, sync, User, Story };
