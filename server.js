@@ -35,7 +35,7 @@ app.post('/', (req, res) => {
 app.delete('/:name', (req, res) => {
     const authorName = req.params.name;
     if (authorName) {
-        return db.User.destroy({ where: { name: authorName } }).then(res.redirect(303, '/'));
+        return db.User.destroy({ where: { name: authorName } }).then(() => res.redirect(303, '/'));
     }
     res.redirect(303, '/');
 });
