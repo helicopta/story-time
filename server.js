@@ -10,6 +10,12 @@ db.sync().then(db.seed)
     .then(stuff => console.log(stuff[0].title, 1234));
 
 
+app.use((req, res, next) => {
+    req.method = req.query._changeMethod ? req.query._changeMethod : req.method;
+    next();
+});
+
+
 app.get('/tag', (req, res) => {
 
     db.Story.getStoriesByTag(req.query.tag).then(stories => res.json(stories.map(str => str.title)));
