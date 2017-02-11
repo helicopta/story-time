@@ -53,7 +53,7 @@ const Story = db.define('story', {
 });
 
 //tells relationship. Users can have many stories and a story has 1 user. adds userId to stories.
-Story.belongsTo(User);
+Story.belongsTo(User, { onDelete: 'CASCADE' });
 User.hasMany(Story);
 
 let connection;
