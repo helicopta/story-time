@@ -20,7 +20,19 @@ const Story = db.define('story', {
     classMethods: {
         createStory: (authorName, { title, content, tags }) => User.findOne({ where: { name: authorName } })
             .then(user => user ? user : User.create({ name: authorName }))
-            .then(author => Story.create({ content, title, tags, userId: author.id }))
+            .then(author => Story.create({ content, title, tags, userId: author.id })),
+        getStories: (authorName) => {
+            let filter = {};
+            if (authorName) {
+                filter.name = authorName;
+            }
+            return Story.findAll({
+                include: [{
+                    model: User,
+                    where: filter
+                }]
+            });
+        }
     }
 });
 
@@ -41,4 +53,4 @@ const seed = () => connect()
     .then(author => Story.createStory('faitzi', { title: 'danni is cool', content: 'super cool', tags: '1,2,3' }));
 const sync = () => connect().then(() => db.sync({ force: true }));
 
-module.exports = { db, seed, sync, User };
+module.exports = { db, seed, sync, User, Story };
