@@ -5,7 +5,12 @@ const db = new Sequelize(process.env.DATABASE_URL);
 //makes users table. Also ensure we have an id, createdAt, updatedAt
 const User = db.define('user', {
     name: Sequelize.STRING
-});
+},{
+    classMethods:{
+    deleteUser:(authorName)=>{
+        return User.destroy({where:{name:authorName}});
+    }
+}});
 
 //makes stories table. with id, createdAt, updatedAt
 const Story = db.define('story', {
