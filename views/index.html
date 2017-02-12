@@ -1,0 +1,57 @@
+<html>
+  <head></head>
+  <body>
+    <h1>
+      <a href='/'>Wiki SQL with Sequelize</a>
+    </h1>
+    {% if (name || tag) %}
+      <a href='/'>All Stories</a>
+    {% endif %}
+    <div>
+      <form action='/tag/'>
+        <div>
+          <label>Search By Tag</label>
+          <br />
+          <input name='tag' value='{{ tag }}' />
+        </div>
+        <button type='submit'>Search</button>
+      </form>
+    </div>
+    <form method='POST' action='/'>
+      <div>
+        <label>User</label>
+        <br />
+        <input name='name' value="{{ name }}" />
+      </div>
+      <div>
+        <label>Tite</label>
+        <br />
+        <input name='title' />
+      </div>
+      <div>
+        <label>Content</label>
+        <br />
+        <input name='content' />
+      </div>
+      <div>
+        <label>Tags</label>
+        <br />
+        <input name='tags' />
+      </div>
+      <button type='submit'>Save</button>
+    </form>
+    <ul>
+      {% for story in stories %}
+        <li>
+          {{ story.content }} 
+          <a href='/{{story.user.name}}'>{{ story.user.name }}</a>
+          <ul>
+            {% for tag in story.tags %}
+              <li>{{ tag }}</li>
+            {% endfor %}
+          </ul>
+        </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>

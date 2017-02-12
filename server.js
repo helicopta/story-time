@@ -1,7 +1,12 @@
 const express = require('express');
 const app = express();
 const db = require('./db');
+const swig = require('swig');
 const bodyParser = require('body-parser');
+
+swig.setDefaults({ cache: false });
+app.set('view engine', 'html');
+app.engine('html', swig.renderFile);
 
 app.use(bodyParser.urlencoded({ entended: false }));
 
@@ -17,13 +22,12 @@ app.use((req, res, next) => {
 
 
 app.get('/tag', (req, res) => {
-
-    db.Story.getStoriesByTag(req.query.tag).then(stories => res.json(stories.map(str => str.title)));
+    db.Story.getStoriesByTag(req.query.tag).then(stories => res.render('index', { stories, tag: req.query.tag }));
 });
 
 app.get('/:name?', (req, res) => {
     db.Story.getStoriesByAuthor(req.params.name)
-        .then(stories => res.json(stories.map(str => str.title)));
+        .then(stories => res.render('index', { stories, name: req.params.name }));
 });
 
 
