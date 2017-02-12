@@ -54,6 +54,13 @@ const Story = db.define('story', {
             return Story.findAll(options);
 
         },
+        getStoriesById: (id) => {
+            let options = {
+                where: { id },
+            };
+            return Story.findOne(options);
+
+        },
         deleteStory:(storyId)=>{
             let filter={};
             filter.id=storyId;

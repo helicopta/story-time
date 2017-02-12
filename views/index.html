@@ -54,7 +54,12 @@
     <ul>
       {% for story in stories %}
         <li>
-          {{ story.content }} 
+          <a href='story/{{story.id}}'>{{ story.title }} </a> 
+          <form method='POST' action='/story/{{story.id}}?_changeMethod=DELETE'>
+          <button type='submit'>
+          DELETE!!!!
+          </button>
+          </form>
           <a href='/{{story.user.name}}'>{{ story.user.name }}</a>
           <ul>
             {% for tag in story.tags %}

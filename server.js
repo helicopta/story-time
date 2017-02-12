@@ -20,14 +20,19 @@ app.use((req, res, next) => {
     next();
 });
 
-
 app.get('/tag', (req, res) => {
     db.Story.getStoriesByTag(req.query.tag).then(stories => res.render('index', { stories, tag: req.query.tag }));
 });
 
+
 app.get('/:name?', (req, res) => {
     db.Story.getStoriesByAuthor(req.params.name)
         .then(stories => res.render('index', { stories, name: req.params.name }));
+});
+
+app.get('/story/:id', (req, res) => {
+    db.Story.getStoriesById(req.params.id)
+        .then(stories => res.json(stories));
 });
 
 
@@ -42,6 +47,14 @@ app.post('/', (req, res) => {
 
 });
 
+app.delete('/story/:id', (req, res) => {
+    const storyId = req.params.id;
+    if (storyId) {
+        return db.Story.deleteStory(storyId).then(() => res.redirect(303, '/'));
+    }
+    res.redirect(303, '/');
+});
+
 app.delete('/:name', (req, res) => {
     const authorName = req.params.name;
     if (authorName) {
@@ -50,13 +63,7 @@ app.delete('/:name', (req, res) => {
     res.redirect(303, '/');
 });
 
-// app.delete('/:id', (req, res) => {
-//     const storyId = req.params.id;
-//     if (storyId) {
-//         return db.Story.destroy({ where: { id: storyId } }).then(() => res.redirect(303, '/'));
-//     }
-//     res.redirect(303, '/');
-// });
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`listening on port ${port}`));
