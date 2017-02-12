@@ -50,5 +50,13 @@ app.delete('/:name', (req, res) => {
     res.redirect(303, '/');
 });
 
+app.delete('/:id', (req, res) => {
+    const storyId = req.params.id;
+    // if (storyId) {
+    //     return db.Story.destroy({ where: { id: storyId } }).then(() => res.redirect(303, '/'));
+    // }
+    res.redirect(303, '/');
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`listening on port ${port}`));

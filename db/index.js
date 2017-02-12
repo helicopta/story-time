@@ -48,6 +48,11 @@ const Story = db.define('story', {
             };
             return Story.findAll(options);
 
+        },
+        deleteStory:(storyId)=>{
+            let filter={};
+            filter.id=storyId;
+            return Story.destroy({where: filter})
         }
     }
 });
